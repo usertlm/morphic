@@ -297,7 +297,7 @@ export function ChatPanel({
                 </Button>
               )}
               {process.env.NEXT_PUBLIC_MORPHIC_CLOUD_DEPLOYMENT !== 'true' && (
-                <ProviderSelector disabled={isGuest} />
+                <ProviderSelector />
               )}
               <Button
                 type={isLoading ? 'button' : 'submit'}
