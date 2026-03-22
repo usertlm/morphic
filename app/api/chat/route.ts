@@ -65,7 +65,7 @@ export async function POST(req: Request) {
       })
     }
 
-    const guestChatEnabled = process.env.ENABLE_GUEST_CHAT === 'true'
+    const guestChatEnabled = process.env.ENABLE_GUEST_CHAT !== 'false'
     const isGuest = !userId
     if (isGuest && !guestChatEnabled) {
       return new Response('Authentication required', {
