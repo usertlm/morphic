@@ -18,8 +18,8 @@
       },
       "adaptive": {
         "speed": {
-          "id": "qwen2.5:latest",
-          "name": "Qwen 2.5 (Ollama)",
+          "id": "deepseek-r1:8b",
+          "name": "DeepSeek R1 (Ollama)",
           "provider": "Ollama",
           "providerId": "ollama"
         },
