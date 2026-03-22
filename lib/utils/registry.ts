@@ -16,6 +16,10 @@ const providers: Record<string, any> = {
   }),
   gateway: createGateway({
     apiKey: process.env.AI_GATEWAY_API_KEY
+  }),
+  minimax: createOpenAI({
+    apiKey: process.env.MINIMAX_API_KEY,
+    baseURL: process.env.MINIMAX_BASE_URL || 'https://api.minimax.chat/v1'
   })
 }
 
@@ -51,6 +55,8 @@ export function isProviderEnabled(providerId: string): boolean {
       return !!process.env.AI_GATEWAY_API_KEY
     case 'ollama':
       return !!process.env.OLLAMA_BASE_URL
+    case 'minimax':
+      return !!process.env.MINIMAX_API_KEY
     default:
       return false
   }
