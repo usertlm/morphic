@@ -4,10 +4,10 @@
     "byMode": {
       "quick": {
         "speed": {
-          "id": "MiniMax-M2.7",
+          "id": "minimax-m2.7",
           "name": "MiniMax M2.7",
           "provider": "MiniMax",
-          "providerId": "minimax"
+          "providerId": "minimax-compatible"
         },
         "quality": {
           "id": "MiniMax-M2.7",

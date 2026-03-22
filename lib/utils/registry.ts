@@ -20,6 +20,10 @@ const providers: Record<string, any> = {
   minimax: createOpenAI({
     apiKey: process.env.MINIMAX_API_KEY,
     baseURL: process.env.MINIMAX_BASE_URL || 'https://api.minimax.chat/v1'
+  }),
+  'minimax-compatible': createOpenAI({
+    apiKey: process.env.MINIMAX_API_KEY,
+    baseURL: (process.env.MINIMAX_BASE_URL || 'https://api.minimax.chat/v1') + '/chat/completions'
   })
 }
 
@@ -62,6 +66,7 @@ export function isProviderEnabled(providerId: string): boolean {
       // Ollama is enabled with fallback URL configured
       return true
     case 'minimax':
+    case 'minimax-compatible':
       return !!process.env.MINIMAX_API_KEY
     default:
       return false
