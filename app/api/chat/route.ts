@@ -6,6 +6,7 @@ import { calculateConversationTurn, trackChatEvent } from '@/lib/analytics'
 import { getCurrentUserId } from '@/lib/auth/get-current-user'
 import { checkAndEnforceOverallChatLimit } from '@/lib/rate-limit/chat-limits'
 import { checkAndEnforceGuestLimit } from '@/lib/rate-limit/guest-limit'
+import { checkAndEnforceGuestPerMinuteLimit } from '@/lib/rate-limit/guest-per-minute-limit'
 import { createChatStreamResponse } from '@/lib/streaming/create-chat-stream-response'
 import { createEphemeralChatStreamResponse } from '@/lib/streaming/create-ephemeral-chat-stream-response'
 import { SearchMode } from '@/lib/types/search'
@@ -79,7 +80,8 @@ export async function POST(req: Request) {
         forwardedFor.split(',')[0]?.trim() ||
         req.headers.get('x-real-ip') ||
         null
-      const guestLimitResponse = await checkAndEnforceGuestLimit(ip)
+      // Per-minute limit: 5 requests per minute for guest trial
+      const guestLimitResponse = await checkAndEnforceGuestPerMinuteLimit(ip)
       if (guestLimitResponse) return guestLimitResponse
     }
 
