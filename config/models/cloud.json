@@ -4,10 +4,17 @@
     "byMode": {
       "quick": {
         "speed": {
-          "id": "minimax-m2.7",
-          "name": "MiniMax M2.7",
-          "provider": "MiniMax",
-          "providerId": "minimax"
+          "id": "gemini-3.1-flash-lite-preview",
+          "name": "Gemini 3.1 Flash Lite Preview",
+          "provider": "Google",
+          "providerId": "google",
+          "providerOptions": {
+            "google": {
+              "thinkingConfig": {
+                "includeThoughts": true
+              }
+            }
+          }
         },
         "quality": {
           "id": "gemini-3.1-pro-preview",
