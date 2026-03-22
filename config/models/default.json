@@ -4,28 +4,16 @@
     "byMode": {
       "quick": {
         "speed": {
-          "id": "gpt-5-mini",
-          "name": "GPT-5 mini",
-          "provider": "OpenAI",
-          "providerId": "openai",
-          "providerOptions": {
-            "openai": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            }
-          }
+          "id": "minimax-m2.7",
+          "name": "MiniMax M2.7",
+          "provider": "MiniMax",
+          "providerId": "minimax"
         },
         "quality": {
-          "id": "gpt-5.2",
-          "name": "GPT-5.2",
-          "provider": "OpenAI",
-          "providerId": "openai",
-          "providerOptions": {
-            "openai": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            }
-          }
+          "id": "minimax-m2.7",
+          "name": "MiniMax M2.7",
+          "provider": "MiniMax",
+          "providerId": "minimax"
         }
       },
       "adaptive": {
@@ -36,24 +24,18 @@
           "providerId": "minimax"
         },
         "quality": {
-          "id": "gpt-5.2",
-          "name": "GPT-5.2",
-          "provider": "OpenAI",
-          "providerId": "openai",
-          "providerOptions": {
-            "openai": {
-              "reasoningEffort": "medium",
-              "reasoningSummary": "auto"
-            }
-          }
+          "id": "minimax-m2.7",
+          "name": "MiniMax M2.7",
+          "provider": "MiniMax",
+          "providerId": "minimax"
         }
       }
     },
     "relatedQuestions": {
-      "id": "gpt-4.1",
-      "name": "GPT-4.1",
-      "provider": "OpenAI",
-      "providerId": "openai"
+      "id": "minimax-m2.7",
+      "name": "MiniMax M2.7",
+      "provider": "MiniMax",
+      "providerId": "minimax"
     }
   }
 }

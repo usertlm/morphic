@@ -1,6 +1,7 @@
 import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies'
 
 import { getModelForModeAndType } from '@/lib/config/model-types'
+import { getModelsConfig } from '@/lib/config/load-models-config'
 import { ModelType } from '@/lib/types/model-type'
 import { Model } from '@/lib/types/models'
 import { SearchMode } from '@/lib/types/search'
@@ -58,7 +59,7 @@ function resolveModelForModeAndType(
  * Determines which model to use based on the model type preference.
  *
  * Priority order:
- * 1. If model type is in cookie -> use corresponding model from config (when enabled)
+ * 1. If modelProvider is in cookie -> use corresponding provider's model from config
  * 2. Otherwise -> use default ordering (speed → quality) for the active mode
  * 3. If the active mode has no enabled models, try remaining modes
  * 4. If config loading fails or providers are unavailable -> use DEFAULT_MODEL as fallback
@@ -67,24 +68,50 @@ export function selectModel({
   cookieStore,
   searchMode
 }: ModelSelectionParams): Model {
-  const modelTypeCookie = cookieStore.get('modelType')?.value as
-    | ModelType
-    | undefined
+  const modelProviderCookie = cookieStore.get('modelProvider')?.value
 
   const requestedMode =
     searchMode && MODE_FALLBACK_ORDER.includes(searchMode)
       ? searchMode
       : 'quick'
 
-  const typePreferenceOrder: ModelType[] = []
-  if (
-    modelTypeCookie &&
-    VALID_MODEL_TYPES.includes(modelTypeCookie) &&
-    !typePreferenceOrder.includes(modelTypeCookie)
-  ) {
-    typePreferenceOrder.push(modelTypeCookie)
+  // If provider is specified in cookie, try to find a model for that provider
+  if (modelProviderCookie) {
+    try {
+      const config = getModelsConfig()
+      const { byMode } = config.models
+
+      // Try both model types (speed/quality) for the requested mode
+      for (const type of VALID_MODEL_TYPES) {
+        const model = byMode[requestedMode]?.[type]
+        if (model && model.providerId === modelProviderCookie) {
+          if (isProviderEnabled(model.providerId)) {
+            return model
+          }
+        }
+      }
+
+      // Fallback: try other modes
+      for (const mode of MODE_FALLBACK_ORDER) {
+        for (const type of VALID_MODEL_TYPES) {
+          const model = byMode[mode]?.[type]
+          if (model && model.providerId === modelProviderCookie) {
+            if (isProviderEnabled(model.providerId)) {
+              return model
+            }
+          }
+        }
+      }
+    } catch (error) {
+      console.error(
+        `[ModelSelection] Failed to load model configuration for provider "${modelProviderCookie}":`,
+        error
+      )
+    }
   }
 
+  // Original logic: use speed → quality order
+  const typePreferenceOrder: ModelType[] = []
   for (const knownType of VALID_MODEL_TYPES) {
     if (!typePreferenceOrder.includes(knownType)) {
       typePreferenceOrder.push(knownType)
