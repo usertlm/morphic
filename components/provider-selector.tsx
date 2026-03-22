@@ -20,8 +20,7 @@ import {
 
 const PROVIDER_OPTIONS = [
   { value: 'minimax', label: 'MiniMax' },
-  { value: 'openai', label: 'OpenAI' },
-  { value: 'google', label: 'Gemini' }
+  { value: 'ollama', label: 'Ollama' }
 ]
 
 export function ProviderSelector({

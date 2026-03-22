@@ -18,10 +18,10 @@
       },
       "adaptive": {
         "speed": {
-          "id": "MiniMax-M2.7",
-          "name": "MiniMax M2.7",
-          "provider": "MiniMax",
-          "providerId": "minimax"
+          "id": "qwen2.5:latest",
+          "name": "Qwen 2.5 (Ollama)",
+          "provider": "Ollama",
+          "providerId": "ollama"
         },
         "quality": {
           "id": "MiniMax-M2.7",

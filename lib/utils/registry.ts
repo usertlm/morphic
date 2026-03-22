@@ -28,6 +28,11 @@ if (process.env.OLLAMA_BASE_URL) {
   providers.ollama = createOllama({
     baseURL: `${process.env.OLLAMA_BASE_URL}/api`
   })
+} else {
+  // Fallback to user's Ollama server
+  providers.ollama = createOllama({
+    baseURL: 'http://47.100.22.92:11434/api'
+  })
 }
 
 export const registry = createProviderRegistry(providers)
@@ -54,7 +59,8 @@ export function isProviderEnabled(providerId: string): boolean {
     case 'gateway':
       return !!process.env.AI_GATEWAY_API_KEY
     case 'ollama':
-      return !!process.env.OLLAMA_BASE_URL
+      // Ollama is enabled with fallback URL configured
+      return true
     case 'minimax':
       return !!process.env.MINIMAX_API_KEY
     default:
